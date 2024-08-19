@@ -2,7 +2,7 @@ import { Network, Alchemy } from "alchemy-sdk";
 import { useSelector, useDispatch } from "react-redux";
 import { setMyNFTs } from "../store/slicers/accounts";
 import axios from 'axios';
-import { getTokenUri } from "./getTokenUri";
+import { getTokenUri } from "../utils/getTokenUri";
 
 
 export const useGetNFTs = () => {
