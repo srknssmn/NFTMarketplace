@@ -5,5 +5,5 @@ export const getTokenUri = async (address, tokenId) => {
     let contract = await useERC721Contract(address)
     let tokenURI = await contract.tokenURI(tokenId)
     
-    return (tokenURI);
-  }
+    return tokenURI;
+}

@@ -1,4 +1,4 @@
-import { Network, Alchemy } from "alchemy-sdk";
+// import { Network, Alchemy } from "alchemy-sdk";
 import { useSelector, useDispatch } from "react-redux";
 import { setMyNFTs } from "../store/slicers/accounts";
 import axios from 'axios';
@@ -25,11 +25,11 @@ export const useGetNFTs = () => {
             // dispatch(setMyNFTs(nftsForOwner))
 
             const response = await axios.get(`https://api.scrollscan.com/api?module=account&action=tokennfttx&address=${account}&startblock=0&endblock=27025780&sort=asc&apikey=QA7NERXTM4BIHBYHKP9XJEGI6AXH8CYIX6`); 
-
+            
             const dataArray = []
 
             for(let i = 0; i < response.data.result.length; i++) {
-                if (response.data.result[i].from !== "0xa0bb394be5cc8783bd1f00e3843088791b5242a7") {
+                if (response.data.result[i].from !== account) {
                     let tokenURI = await getTokenUri(response.data.result[i].contractAddress, response.data.result[i].tokenID)
 
                     await dataArray.push({

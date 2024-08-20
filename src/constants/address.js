@@ -1,0 +1,1 @@
+export const NFTMarketplace_ADDRESS = "0x6e6D300480E5D5990e445dDde966Ad22E2F97ab4"
