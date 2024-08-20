@@ -2,8 +2,13 @@ import { NFTMarketplace_ABI } from "../constants/abi";
 import { NFTMarketplace_ADDRESS } from "../constants/address";
 import { ethers } from "ethers";
 import { useERC721Contract } from "./useERC721Contract";
+import { useGetListedNFTs } from '../hooks/useGetListedNFTs';
+import { useGetNFTs } from '../hooks/useGetNFTs'
 
 export const useNFTMarketplaceContract = () => {
+
+    const { getListedNFTs } = useGetListedNFTs();
+    const { getNFTs } = useGetNFTs();
 
     const provider = new ethers.providers.Web3Provider(window.ethereum);
     const signer = provider.getSigner();
@@ -21,15 +26,16 @@ export const useNFTMarketplaceContract = () => {
 
         const state = await NFTContract.getApproved(_tokenId)
 
-        if (state === NFTMarketplace_ADDRESS.toString()) {
-            const txh = await contract.startNFTSale(_contractAddress, _price.price, _tokenId);
-            await txh.wait();
-            const hash = await txh.hash
-            console.log(hash)
-        } else {
-            const txh = await NFTContract.approve(NFTMarketplace_ADDRESS.toString(), _tokenId);
-            await txh.wait()
+        if (state !== NFTMarketplace_ADDRESS.toString()) {
+            const txn = await NFTContract.approve(NFTMarketplace_ADDRESS.toString(), _tokenId);
+            await txn.wait()
         }
+
+        const txh = await contract.startNFTSale(_contractAddress, _price.price, _tokenId);
+        await txh.wait();
+        const hash = await txh.hash
+        console.log(hash)
+        await getNFTs();
     }
 
     const cancelNFTSale = async (_id) => {
@@ -37,6 +43,8 @@ export const useNFTMarketplaceContract = () => {
         await txh.wait();
         const hash = await txh.hash
         console.log(hash)
+
+        await getListedNFTs();
     }
 
     const buyNFT = async (_id, _price) => {
@@ -48,6 +56,8 @@ export const useNFTMarketplaceContract = () => {
         await txh.wait();
         const hash = await txh.hash
         console.log(hash)
+
+        await getListedNFTs();
     }
 
     return {startNFTSale, buyNFT, cancelNFTSale}
