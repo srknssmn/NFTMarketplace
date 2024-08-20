@@ -36,7 +36,7 @@ export const useGetListedNFTs = () => {
                         1: info.tokenId.toString(),
                         2: info.price.toString(),
                         3: info.seller,
-                        4: info.buyer
+                        4: i
                     }
                     await listedNFTsArray.push(newItem)
                 }

@@ -24,7 +24,7 @@ export const useGetNFTs = () => {
             // const nftsForOwner = await alchemy.nft.getNftsForOwner(account);
             // dispatch(setMyNFTs(nftsForOwner))
 
-            const response = await axios.get(`https://api.scrollscan.com/api?module=account&action=tokennfttx&address=${account}&startblock=0&endblock=27025780&sort=asc&apikey=QA7NERXTM4BIHBYHKP9XJEGI6AXH8CYIX6`); 
+            const response = await axios.get(`https://api.scrollscan.com/api?module=account&action=tokennfttx&address=${account}&startblock=0&endblock=27025780&sort=asc&apikey=${import.meta.env.VITE_REACT_APP_API_KEY}`); 
             
             const dataArray = []
 

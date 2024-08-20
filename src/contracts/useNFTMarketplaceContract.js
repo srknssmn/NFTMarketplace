@@ -32,6 +32,24 @@ export const useNFTMarketplaceContract = () => {
         }
     }
 
-    return {startNFTSale}
+    const cancelNFTSale = async (_id) => {
+        const txh = await contract.cancelNFTSale(_id);
+        await txh.wait();
+        const hash = await txh.hash
+        console.log(hash)
+    }
+
+    const buyNFT = async (_id, _price) => {
+        console.log(_price)
+        let priceValue = await String(_price)
+        const _value = ethers.utils.parseEther(priceValue)
+        console.log(_value)
+        const txh = await contract.buyNFT(_id, {value: _value});
+        await txh.wait();
+        const hash = await txh.hash
+        console.log(hash)
+    }
+
+    return {startNFTSale, buyNFT, cancelNFTSale}
 
 };
